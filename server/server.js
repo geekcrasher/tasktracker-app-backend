@@ -16,7 +16,7 @@ app.use(cors({
    origin: ["http://localhost:4000", "https://task-vercel-deploy.vercel.app/"]
 }));
 
-app.use("/todos", todoRouter);
+app.use("/", todoRouter);
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
