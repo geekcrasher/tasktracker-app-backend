@@ -12,11 +12,9 @@ const todoRouter = require("./routes/todoRouter");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cors({
-   origin: ["http://localhost:4000", "https://task-vercel-deploy.vercel.app/"]
-}));
+app.use(cors());
 
-app.use("/", todoRouter);
+app.use("/todos", todoRouter);
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
