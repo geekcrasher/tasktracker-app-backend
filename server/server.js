@@ -1,0 +1,47 @@
+const dotenv = require("dotenv").config();
+
+const express = require("express");
+const cors = require("cors");
+const app = express();
+const PORT = process.env.PORT || 4000;
+const mongoose = require("mongoose");
+const connectDB = require("./config/connectDB");
+const todoRouter = require("./routes/todoRouter");
+
+// connectDB()
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cors({
+   origin: ["http://localhost:4000", "https://task-vercel-deploy.vercel.app/"]
+}));
+
+app.use("/todos", todoRouter);
+
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log("MongoDB Connected ", mongoose.connection.host);
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+
+
+/*
+  const startDB = async () => {
+   try {
+      await connectDB()
+      app.listen(PORT, () => {
+         console.log(`Server running on port ${PORT}`)
+      })
+   } catch (error) {
+      console.log(error)
+   }
+}
+
+startDB()
+*/
